@@ -85,7 +85,7 @@ function callOpenAI($image_path, $api_key) {
     $host = $_SERVER['HTTP_HOST'];
     $script_path = dirname($_SERVER['SCRIPT_NAME']);
     $base_url = $protocol . "://" . $host . $script_path . "/uploads/";
-    $image_url = $base_url . "resized_" . $file_name;
+    $image_url = $base_url . basename($image_path);
 
     if (empty($prompt)) {
         echo ("Error: \$prompt is empty!");
