@@ -70,6 +70,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
 
         echo "<h2>Extracted Data:</h2>";
         echo "<pre>" . json_encode($response, JSON_PRETTY_PRINT) . "</pre>";
+        echo "</hr>";
+        echo "<pre>";
+        $jsonResponse = $response['choices'][0]['message'];
+        $json_string = preg_replace('/```json\n|\n```/', '', jsonResponse);
+        // Step 2: Decode JSON into an associative array
+        $parsed_json = json_decode($json_string, true);
+        var_dump($parsed_json);
+        echo "</pre>";
+        echo "</hr>";
 
     } else {
         echo "Failed to upload the image.";
