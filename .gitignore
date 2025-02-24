@@ -1,2 +1,4 @@
 apiKey.txt
 prompt.txt
+uploads/
+!uploads/.gitkeep
