@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         echo '<h1>Final Data</h1>';
         echo "<hr/>";
         echo "<pre>";
-        $jsonResponse = $response['choices'][0]['message']['content'];
+        $jsonResponse = str_replace("Here's the structured data extracted from the provided document in JSON format:", '', $response['choices'][0]['message']['content']);
         $json_string = preg_replace('/```json\n|\n```/', '', $jsonResponse);
         // Step 2: Decode JSON into an associative array
         $parsed_json = json_decode($json_string, true);
