@@ -91,16 +91,8 @@ function callOpenAI($image_path, $api_key) {
         exit;
     }
 
-    $ch = curl_init("https://api.openai.com/v1/chat/completions");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $api_key",
-        "Content-Type: application/json"
-    ]);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        "model" => "gpt-4o",
+    $payload = json_encode([
+        "model" => "gpt-4o",  // ✅ Ensure this is set correctly
         "messages" => [
             ["role" => "system", "content" => "You are an AI assistant that extracts structured data from documents."],
             ["role" => "user", "content" => [
@@ -109,7 +101,19 @@ function callOpenAI($image_path, $api_key) {
             ]]
         ],
         "max_tokens" => 500
-    ]));
+    ]);
+
+    $ch = curl_init("https://api.openai.com/v1/chat/completions");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer $api_key",
+        "Content-Type: application/json"
+    ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+    var_dump($payload);
 
     $response = curl_exec($ch);
     if (curl_errno($ch)) {
