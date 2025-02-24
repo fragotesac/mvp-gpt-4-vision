@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors',1);
+
 // OpenAI API Key
 $openai_api_key = str_replace("\n", "", file_get_contents(__DIR__ . '/apiKey.txt'));
 // Function to resize image
