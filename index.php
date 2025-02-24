@@ -80,8 +80,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
 // Function to call OpenAI Vision API
 function callOpenAI($image_path, $api_key) {
     $prompt = file_get_contents(__DIR__ . '/prompt.txt');
-
     $image_data = base64_encode(file_get_contents($image_path));
+
+    if (empty($prompt)) {
+        echo ("Error: \$prompt is empty!");
+        exit;
+    }
+    if (empty($image_data)) {
+        echo ("Error: \$image_data is empty!");
+        exit;
+    }
 
     $ch = curl_init("https://api.openai.com/v1/chat/completions");
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
