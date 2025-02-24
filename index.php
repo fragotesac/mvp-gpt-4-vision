@@ -55,11 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         list($width, $height) = getimagesize($file_path);
 
         // Determine new size
-        if ($width > 1024 || $height > 1024) {
-            $new_size = 1024;
-        } else {
+        //if ($width > 1024 || $height > 1024) {
+        //    $new_size = 1024;
+        //} else {
             $new_size = 512;
-        }
+        //}
 
         // Resize image
         $resized_path = $upload_dir . "resized_" . $file_name;
@@ -71,6 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         echo "<h2>Extracted Data:</h2>";
         echo "<pre>" . json_encode($response, JSON_PRETTY_PRINT) . "</pre>";
         echo "</hr>";
+        echo '<h1>Final Data</h1>';
+        echo "<hr/>";
         echo "<pre>";
         $jsonResponse = $response['choices'][0]['message']['content'];
         $json_string = preg_replace('/```json\n|\n```/', '', $jsonResponse);
