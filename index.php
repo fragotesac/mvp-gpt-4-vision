@@ -103,8 +103,18 @@ function callOpenAI($image_path, $api_key) {
     ]));
 
     $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        throw new Exception("Curl error: " . curl_error($ch));
+    }
+
     curl_close($ch);
-    return json_decode($response, true);
+    $decoded_response = json_decode($response, true);
+
+    if (!$decoded_response) {
+        throw new Exception("Failed to parse OpenAI API response.");
+    }
+
+    return $decoded_response;
 }
 ?>
 
