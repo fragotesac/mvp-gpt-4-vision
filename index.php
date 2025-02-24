@@ -97,7 +97,7 @@ function callOpenAI($image_path, $api_key) {
     }
 
     $payloadArr = [
-        "model" => "gpt-4-vision-preview",  // ✅ Ensure this is set correctly
+        "model" => "gpt-4o",  // ✅ Ensure this is set correctly
         "messages" => [
             ["role" => "system", "content" => "You are an AI assistant that extracts structured data from documents."],
             ["role" => "user", "content" => [
