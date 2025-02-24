@@ -125,7 +125,7 @@ function callOpenAI($image_path, $api_key) {
                 ["type" => "image_url", "image_url" => ['url' => $image_url]]
                 ]]
         ],
-        "max_tokens" => 500
+        "max_tokens" => 1000
     ];
     $payload = json_encode($payloadArr);
 
