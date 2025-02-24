@@ -73,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         echo "</hr>";
         echo "<pre>";
         $jsonResponse = $response['choices'][0]['message']['content'];
-        var_dump($response, $jsonResponse);exit;
         $json_string = preg_replace('/```json\n|\n```/', '', $jsonResponse);
         // Step 2: Decode JSON into an associative array
         $parsed_json = json_decode($json_string, true);
