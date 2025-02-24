@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         }
 
         // Resize image
-        $resized_path = $upload_dir . "resized_" . $file_name;
+        $resized_path = $upload_dir . time() . "resized_" . $file_name;
         resizeImage($file_path, $resized_path, $new_size, $new_size);
 
         // Call OpenAI API
