@@ -96,7 +96,7 @@ function callOpenAI($image_path, $api_key) {
         exit;
     }
 
-    $payload = json_encode([
+    $payloadArr = [
         "model" => "gpt-4o",  // ✅ Ensure this is set correctly
         "messages" => [
             ["role" => "system", "content" => "You are an AI assistant that extracts structured data from documents."],
@@ -106,7 +106,8 @@ function callOpenAI($image_path, $api_key) {
                 ]]
         ],
         "max_tokens" => 500
-    ]);
+    ];
+    $payload = json_encode($payloadArr);
 
     $ch = curl_init("https://api.openai.com/v1/chat/completions");
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -118,7 +119,7 @@ function callOpenAI($image_path, $api_key) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
-    var_dump($payload);
+    var_dump('<pre>', $payloadArr);
 
     $response = curl_exec($ch);
     if (curl_errno($ch)) {
