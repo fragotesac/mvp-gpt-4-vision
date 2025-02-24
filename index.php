@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('upload_max_filesize', '100M');
 ini_set('post_max_size', '100M');
 
-
 // OpenAI API Key
 $openai_api_key = str_replace("\n", "", file_get_contents(__DIR__ . '/apiKey.txt'));
 // Function to resize image
@@ -66,11 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
         list($width, $height) = getimagesize($file_path);
 
         // Determine new size
-        //if ($width > 1024 || $height > 1024) {
-        //    $new_size = 1024;
-        //} else {
+        if ($width > 1024 || $height > 1024) {
+            $new_size = 1024;
+        } else {
             $new_size = 512;
-        //}
+        }
 
         // Resize image
         $resized_path = $upload_dir . "resized_" . $file_name;
