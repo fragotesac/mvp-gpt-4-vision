@@ -1,7 +1,6 @@
 <?php
 // OpenAI API Key
-$openai_api_key = file_get_contents(__DIR__ . '/apiKey.txt');
-
+$openai_api_key = str_replace("\n", "", file_get_contents(__DIR__ . '/apiKey.txt'));
 // Function to resize image
 function resizeImage($source_path, $destination_path, $new_width, $new_height) {
     list($width, $height, $image_type) = getimagesize($source_path);
@@ -79,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
 
 // Function to call OpenAI Vision API
 function callOpenAI($image_path, $api_key) {
-    $prompt = file_get_contents(__DIR__ . '/prompt.txt');
+    $prompt = str_replace("\n", "",file_get_contents(__DIR__ . '/prompt.txt'));
     $image_data = base64_encode(file_get_contents($image_path));
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
     $host = $_SERVER['HTTP_HOST'];
@@ -102,7 +101,7 @@ function callOpenAI($image_path, $api_key) {
             ["role" => "system", "content" => "You are an AI assistant that extracts structured data from documents."],
             ["role" => "user", "content" => [
                 ["type" => "text", "text" => $prompt],
-                ["type" => "image_url", "image_url" => $image_url]
+                ["type" => "image_url", "image_url" => ['url' => $image_url]]
                 ]]
         ],
         "max_tokens" => 500
