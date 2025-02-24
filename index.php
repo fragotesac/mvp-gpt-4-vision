@@ -54,6 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
     $file_name = basename($_FILES["image"]["name"]);
     $file_path = $upload_dir . $file_name;
 
+    if ($_FILES["image"]["error"] !== UPLOAD_ERR_OK) {
+        die("File upload error: " . $_FILES["image"]["error"]);
+    }
+
     // Move uploaded file
     if (move_uploaded_file($file_tmp, $file_path)) {
         list($width, $height) = getimagesize($file_path);
