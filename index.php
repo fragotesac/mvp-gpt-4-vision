@@ -81,6 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
 function callOpenAI($image_path, $api_key) {
     $prompt = file_get_contents(__DIR__ . '/prompt.txt');
     $image_data = base64_encode(file_get_contents($image_path));
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'];
+    $script_path = dirname($_SERVER['SCRIPT_NAME']);
+    $base_url = $protocol . "://" . $host . $script_path . "/uploads/";
+    $image_url = $base_url . "resized_" . $file_name;
 
     if (empty($prompt)) {
         echo ("Error: \$prompt is empty!");
@@ -97,8 +102,8 @@ function callOpenAI($image_path, $api_key) {
             ["role" => "system", "content" => "You are an AI assistant that extracts structured data from documents."],
             ["role" => "user", "content" => [
                 ["type" => "text", "text" => $prompt],
-                ["type" => "image_url", "image_url" => "data:image/jpeg;base64,$image_data"]
-            ]]
+                ["type" => "image_url", "image_url" => $image_url]
+                ]]
         ],
         "max_tokens" => 500
     ]);
